@@ -1,0 +1,29 @@
+#!/bin/bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
+set -o xtrace
+
+
+readonly TARGET_HOST=Rebuild@RE1
+readonly PRIVATE_KEY_PATH=~/.ssh/id_rsa
+readonly TARGET_ARCH=armv7-unknown-linux-gnueabihf
+
+readonly TARGET_PATH=/home/Rebuild/fc_sensors
+readonly SOURCE_PATH=./target/${TARGET_ARCH}/release/fc_sensors
+
+export VL53L1X_CC=arm-linux-gnueabihf-gcc
+export VL53L1X_AR=arm-linux-gnueabihf-ar
+
+cargo build --release --target=${TARGET_ARCH} 
+
+scp -i ${PRIVATE_KEY_PATH} ${SOURCE_PATH} ${TARGET_HOST}:${TARGET_PATH}
+
+readonly TARGET2_PATH=/home/Rebuild/config.json
+readonly SOURCE2_PATH=./config.json
+scp -i ${PRIVATE_KEY_PATH} ${SOURCE2_PATH} ${TARGET_HOST}:${TARGET2_PATH}
+
+ssh -i ${PRIVATE_KEY_PATH} -t ${TARGET_HOST} "export RUST_BACKTRACE=full; ${TARGET_PATH}"
+
+

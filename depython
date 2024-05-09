@@ -1,0 +1,21 @@
+#!/bin/bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
+set -o xtrace
+
+# Define the target host, private key path, and the paths of the files
+readonly TARGET_HOST=Rebuild@RE1
+readonly PRIVATE_KEY_PATH=~/.ssh/id_rsa
+readonly CAMERA_SCRIPT_FOLDER_PATH=./camera_script/
+readonly CAMERA_MAIN_PATH=./camera_script/camera_main.py
+
+readonly REMOTE_PATH=/home/Rebuild/
+
+# Copy the files to the remote machine
+scp -r -i ${PRIVATE_KEY_PATH} ${CAMERA_SCRIPT_FOLDER_PATH} ${TARGET_HOST}:${REMOTE_PATH}
+
+# Run the file1 with Python on the remote machine
+ssh -i ${PRIVATE_KEY_PATH} -t ${TARGET_HOST} "python3 ${REMOTE_PATH}/${CAMERA_MAIN_PATH}"
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC+myeAfTBWhYCHEm/x/XNzvwdDHtI+NgMUs5/7B25U9mYspXzX7jdAz7G0DUIcvzeq1h5P82uvIZcI2ftWH9l0s+tcDa/M4UGzgidkmiLfUpKvYEGGp+OlLqLlEm2r1ExDtZYYasN9IoCG5KChdI3/qW0UQAvlECE7qi+pGoEIsIty1vVNmoNt8ghNtVatlEwvKXMY+ewG0jEzHlpCXg+wdx/4UmASSYKbbQbCP6MSYOtBk97YJ2lMf87F9rMTGKBmKKdwF/Td/Xtk5/+SXd/RABRhJJH6MfVaNKIdVxfdyUcfwW5GSx6nMBAantma9ZVPj8bX9FLx6QcrZAGHpmFK93OpqhpP+JIjDCQmCMh3t896Bx6VM3DZlouWKW0ZYZMfNS5XFL8DafrVpKXxaECyJ2zwVL/rGeAaZl8AGwa1RZzIqepAlkaJsXz0Gr22xQcxuCtfdIe+mhWHsiWOoXWc1g3Lbo1ncBth1QO0OChhpis63oJQ+pk6oEw7PfAQzLc= Rebuild@RE1

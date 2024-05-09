@@ -1,0 +1,28 @@
+[package]
+name = "fc_sensors"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+actix-web = "4"
+actix-rt = "2.2.0"
+rand = "0.8.4"
+actix-files = "0.6.0"
+tokio = { version = "1.36.0", features = ["full"] }
+rppal = "0.17.1"
+
+serde_json = "1.0"
+serde = { version = "1.0.197", features = ["derive"] }
+reqwest = { version = "0.12", features = ["json"] }
+openssl = "0.10.36"
+openssl-sys = {version = "0.9.66", features = ["vendored"]}
+vl53l1x = { version = "1.2.0", features = ["i2c-2v8-mode"] }
+actix-multipart = "0.6.1"
+sanitize-filename = "0.5.0"
+tokio-util = "0.7.10"
+futures-util = "0.3.30"
+hyper = "1.3.1"
+
+
