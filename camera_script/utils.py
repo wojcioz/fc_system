@@ -2,10 +2,13 @@ import os
 import time
 import cv2
 from datetime import datetime
+
 def generate_filename(format):
-    # Generates a folder with current date, and path to the file that is current time, as an arguments it takes file extension and names the output path accordingly
+    # Generates a folder with current date, and path to the file that 
+    # is current time, as an arguments it takes file extension and names
+    # the output path accordingly
     filename = os.path.join(
-        "recs", time.strftime("%Y%m%d"), time.strftime("%H%M%S") + format
+        "/home/Rebuild/recs", time.strftime("%Y%m%d"), time.strftime("%H%M%S") + format
     )
     folder_path = os.path.dirname(filename)
     if not os.path.exists(folder_path):

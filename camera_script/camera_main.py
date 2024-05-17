@@ -1,33 +1,10 @@
-from flask import Flask, Response
-import cv2
-import numpy as np
+from flask import Flask, Response, send_from_directory
 import time
 from CameraHandler import CameraHandler
-
+import os
 app = Flask(__name__)
 
         
-def generate_frames():
-    global cam_handler
-    # time.sleep(0.1)  # allow the camera to warmup
-    encoder = H264Encoder(10000000)
-    while True:
-        time.sleep(0.1)
-        if not cam_handler.recording:
-            break
-        try:
-            # array = cam_handler.cam.capture_array()
-            # cam_handler.cam.start_recording(encoder, 'test.h264')
-            # _, jpeg = cv2.imencode('.jpg', array)
-            # yield (b'--frame\r\n'
-            #        b'Content-Type: image/jpeg\r\n\r\n' + jpeg.tobytes() + b'\r\n')
-            if not cam_handler.recording:
-                break
-        except Exception as e:
-            print(f"Error: {e}")
-            continue
-    cam_handler.cam.stop_recording()
-    print("Stopping frame generation")        
 
 @app.route("/video_feed")
 def video_feed():
@@ -39,7 +16,6 @@ def video_feed():
 @app.route("/start_capture")
 def start_capture():
     global cam_handler
-    # cam_handler.start()
     cam_handler.start_recording()
     return "Capture started"
 
@@ -54,7 +30,20 @@ def convert():
     global cam_handler
     cam_handler.convert_vids()
     return "Conversion started"
-    
+
+@app.route('/files', defaults={'req_path': ''})
+@app.route('/files/<path:req_path>')
+def dir_listing(req_path):
+    BASE_DIR = '/home/Rebuild/recs'
+    abs_path = os.path.join(BASE_DIR, req_path)
+    if not os.path.exists(abs_path):
+        return "Not Found", 404
+    if os.path.isfile(abs_path):
+        return send_from_directory(BASE_DIR, req_path)
+    files = os.listdir(abs_path)
+    return "<br>".join(files)
+
+
 global cam_handler 
 cam_handler = CameraHandler()
 
@@ -71,4 +60,4 @@ else:
     if __name__ == "__main__":
         app.run(
             host="0.0.0.0", port="5000"
-        )  # host and port can be changed as per requirement
+        ) 

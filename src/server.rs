@@ -37,12 +37,12 @@ pub async fn index() -> impl Responder {
 
 pub async fn value(data: web::Data<Arc<Mutex<f32>>>) -> impl Responder {
     //test line
-    i2c_sensor::print_sensor();
+    i2c_sensor::read_sensor();
     //
     let start = std::time::Instant::now();
     let my_float = data.lock().await;
     // TODO: https://doc.rust-lang.org/std/sync/mpsc/
-    let duration = start.elapsed();
+    let duration: Duration = start.elapsed();
     println!("Time elapsed in value function is: {:?}", duration);
     HttpResponse::Ok().body(format!("{}", my_float))
 }

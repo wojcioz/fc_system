@@ -110,3 +110,7 @@ gpio -v
 error: linking with `arm-linux-gnueabihf-gcc` failed: exit status: 1
 just cargo clean
 
+# for uart
+enable serial port in raspi-config
+chmod 766 /dev/ttyS0
+remove ```console=serial0, 115200``` from ```sudo nano /boot/cmdline.txt```

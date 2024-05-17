@@ -36,6 +36,7 @@ class CameraHandler:
         self.frame_reader = RingBuffer(size_max=2)
         
     def start_recording(self):
+        print(generate_filename(".h264"))
         self.cam.start_recording(self.encoder, generate_filename(".h264"),name=self.mode, quality=Quality.MEDIUM)
         print("Recording started")
         self.recording = True

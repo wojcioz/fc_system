@@ -19,9 +19,9 @@ async fn main() -> std::io::Result<()> {
     // if let Err(err) = tokio::spawn(generator::start_gpio_reader()).await {
     //     eprintln!("Error starting GPIO reader: {}", err);
     // }
-    // tokio::spawn(i2c_sensor::print_sensor());
+    // tokio::spawn(i2c_sensor::read_sensor());
     // println!("Starting reading i2c sensor");
-    // i2c_sensor::print_sensor();
+    // i2c_sensor::read_sensor();
     print!("Running server");
     server::run_server(my_float).await
 
