@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 import json
 import socket
-import struct
+from pipes import Pipe
 
 
 app = Flask(__name__)
@@ -23,6 +23,15 @@ def distance():
 
 
 def sensor_closed(id):
+    # {
+    #     "effect": "breathe",
+    #     "parameters": [1, 10],
+    #     "color": [255, 255, 255]
+    # }
+
+    pipe = Pipe("distance")
+    pipe.write_to_pipe(1)
+
     with open('config.json') as f:
         config = json.load(f)
         light_break_request_url = config["light_break_request_url"].split("//", 1)[1]
