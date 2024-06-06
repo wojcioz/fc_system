@@ -5,6 +5,9 @@ Cargo.lock
 # Actix
 .env
 
+# Python
+venv/
+
 .vscode/
 *.pyc
 __pycache__/

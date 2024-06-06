@@ -23,4 +23,4 @@ def check_connection(ip, port):
         print(f"Error occurred while connecting: {e}")
 
 # Call the function to check the connection
-check_connection("192.168.0.170", 8081)
+check_connection("127.0.0.1", 8081)
