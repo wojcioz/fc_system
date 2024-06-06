@@ -16,7 +16,7 @@ readonly SOURCE_PATH=./target/${TARGET_ARCH}/release/fc_sensors
 export VL53L1X_CC=arm-linux-gnueabihf-gcc
 export VL53L1X_AR=arm-linux-gnueabihf-ar
 
-cargo build --release --target=${TARGET_ARCH} 
+cargo build  --release --target=${TARGET_ARCH} 
 
 scp -i ${PRIVATE_KEY_PATH} ${SOURCE_PATH} ${TARGET_HOST}:${TARGET_PATH}
 

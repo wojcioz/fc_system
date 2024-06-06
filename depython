@@ -18,5 +18,3 @@ scp -r -i ${PRIVATE_KEY_PATH} ${CAMERA_SCRIPT_FOLDER_PATH} ${TARGET_HOST}:${REMO
 
 # Run the file1 with Python on the remote machine
 ssh -i ${PRIVATE_KEY_PATH} -t ${TARGET_HOST} "python3 ${REMOTE_PATH}/${CAMERA_MAIN_PATH}"
-
-

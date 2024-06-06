@@ -19,7 +19,7 @@ source $HOME/.cargo/env
 You also need to add target:
 rustup target add armv7-unknown-linux-gnueabihf
 rustup toolchain install stable-armv7-unknown-linux-gnueabihf
-
+????rustup target add armv7-unknown-linux-gnueabihf
 
 sudo apt-get install gcc-arm*
  
@@ -114,3 +114,7 @@ just cargo clean
 enable serial port in raspi-config
 chmod 766 /dev/ttyS0
 remove ```console=serial0, 115200``` from ```sudo nano /boot/cmdline.txt```
+
+
+export CARGO_PROFILE_RELEASE_BUILD_OVERRIDE_DEBUG=true 
+export RUST_BACKTRACE=1

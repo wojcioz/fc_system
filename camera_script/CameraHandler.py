@@ -25,11 +25,11 @@ class CameraHandler:
     def __init__(self):
         self.cam = Picamera2()
         self.cam.configure(
-            self.cam.create_video_configuration(main={"size": (1920, 1080),"format": "RGB888"},
+            self.cam.create_video_configuration(main={"size": (1280, 720),"format": "RGB888"}, 
                                                   lores={"size": (1280, 720),"format": "YUV420"})
         )
         self.mode = "lores"
-        self.cam.set_controls({"AfMode": controls.AfModeEnum.Continuous, "FrameRate": 20})
+        # self.cam.set_controls({"AfMode": controls.AfModeEnum.Continuous, "FrameRate": 20}) # commented out for global shutter camera
         self.recording = False
         self.encoder = H264Encoder(10000000)
         self.thread = None
