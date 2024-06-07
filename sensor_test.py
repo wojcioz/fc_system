@@ -7,6 +7,7 @@ import time
 import chardet
 import struct
 import sys
+import requests
 
 TOF_length = 16
 TOF_header = (87, 0, 255)
@@ -38,10 +39,19 @@ def calcCheckSum(data, len):
     TOF_check = TOF_check % 256
     return TOF_check
 
-
+##17 27 22
 # TODO Change the code to run on a flask server and respond with all 3 distances on endpoint /distance. format output to [x,y,z]
 # TODO When one of the DI sensors is activated, a request is to be send to address form config file.
 # ktos wchodzi na endpoint /distance i wtedy wysylany jest request do serwera z config.json z informacja o przerwaniu wiazki.
+
+# Pin set up
+GPIO.setmode(GPIO.BOARD)
+channels = [11, 13, 15]
+for channel in channels:
+    GPIO.setup(channel, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+    GPIO.add_event_detect(channel, GPIO.RISING)  # add rising edge detection on a channel
+
+
 SENSOR_ID = 0x02
 
 RAW_QUERY = (0x57, 0x10, 0xFF, 0xFF, SENSOR_ID, 0xFF, 0xFF)
@@ -93,3 +103,8 @@ while True:
 
     else:
         print("Nie ma odpowiedzi")
+        
+    for channel in channels:
+        if GPIO.event_detected(channel):
+            print(f"Sensor {channel} activated")
+            requests.get("http://127.0.0.1:8000/distance")

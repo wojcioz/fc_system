@@ -16,6 +16,7 @@ class Pipe:
             with open(self.pipe_name, 'r') as pipe:
                 data = pipe.read()
                 print(f"Read from pipe '{self.pipe_name}': {data}")
+                # delete data
         except FileNotFoundError:
             print(f"Pipe '{self.pipe_name}' does not exist.")
         except Exception as e:

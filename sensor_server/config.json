@@ -1,0 +1,6 @@
+{
+    "url": "http://192.168.0.170:8081",
+    "light_break_request_url": "http://127.0.0.1:8081",
+    "leds_request_url": "http://127.0.0.1:8082",
+    "video_folder": "/home/Rebuild/Desktop/fc_camera_server/recs"
+}

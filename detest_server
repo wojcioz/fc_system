@@ -8,15 +8,15 @@ set -o xtrace
 # Define the target host, private key path, and the paths of the files
 readonly TARGET_HOST=Rebuild@RE1
 readonly PRIVATE_KEY_PATH=~/.ssh/id_rsa
-readonly CAMERA_SCRIPT_FOLDER_PATH=./sensor_test.py
-readonly CAMERA_MAIN_PATH=./sensor_test.py
+readonly SCRIPT_FOLDER=./python_tester/
+readonly MAIN_FILE_PATH=./python_tester/test_server.py
 
 readonly REMOTE_PATH=/home/Rebuild/
 
 # Copy the files to the remote machine
-scp -r -i ${PRIVATE_KEY_PATH} ${CAMERA_SCRIPT_FOLDER_PATH} ${TARGET_HOST}:${REMOTE_PATH}
+scp -r -i ${PRIVATE_KEY_PATH} ${SCRIPT_FOLDER} ${TARGET_HOST}:${REMOTE_PATH}
 
 # Run the file1 with Python on the remote machine
-ssh -i ${PRIVATE_KEY_PATH} -t ${TARGET_HOST} "sudo python3 ${REMOTE_PATH}/${CAMERA_MAIN_PATH}"
+ssh -i ${PRIVATE_KEY_PATH} -t ${TARGET_HOST} "cd ${REMOTE_PATH}/${SCRIPT_FOLDER}; sudo python3 ${REMOTE_PATH}/${MAIN_FILE_PATH}"
 
 

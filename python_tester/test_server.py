@@ -1,4 +1,6 @@
 import socket
+import pickle
+
 
 def run_server():
     # Create a socket object
@@ -18,7 +20,9 @@ def run_server():
 
         # Receive data from the client
         data = client_socket.recv(1024)
-        print(f'Received data: {data.decode("utf-8")}')
+        # print(f'Received data: {data.decode("utf-8")}')
+        print(f'Received data: {pickle.loads(data)}')
+        
         # Send a response back to the client
         response = 'HTTP/1.1 200 OK\n\nHello, client!'
         client_socket.send(response.encode())
