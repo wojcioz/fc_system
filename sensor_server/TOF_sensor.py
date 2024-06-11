@@ -21,14 +21,15 @@ class TOF_sensor:
 
         RAW_QUERY = (0x57, 0x10, 0xFF, 0xFF, SENSOR_ID, 0xFF, 0xFF)
         RAW_QUERY += (self.calcCheckSum(RAW_QUERY, len(RAW_QUERY)),)
-        print(f"RAW_QUERY: {RAW_QUERY}")
+        print(f"RAW_QUERY: {RAW_QUERY}", flush=True)
 
         ser = serial.Serial("/dev/ttyS0", 115200)
         ser.flushInput()
         
         while True:
-            ser.write(bytes(RAW_QUERY))
-            print(f"{ser.inWaiting()} bajtow czeka w buforze uart")
+            print("bytes rawquery", ser.write(bytes(RAW_QUERY)), bytes(RAW_QUERY))
+            time.sleep(0.01)
+            print(f"{ser.inWaiting()} bajtow czeka w buforze uart", flush=True)
             
             if ser.inWaiting() >= 16:
 
@@ -44,26 +45,28 @@ class TOF_sensor:
                     and TOF_data[2] == self.TOF_header[2]
                 ) and (self.verifyCheckSum(TOF_data[:self.TOF_length], self.TOF_length)):
                     if ((TOF_data[12]) | (TOF_data[13] << 8)) == 0:
-                        print("Out of range!")
+                        print("Out of range!", flush=True)
                     else:
-                        print("TOF id is: " + str(TOF_data[3]))
+                        print("TOF id is: " + str(TOF_data[3]), flush=True)
                         TOF_system_time = (
                             TOF_data[4]
                             | TOF_data[5] << 8
                             | TOF_data[6] << 16
                             | TOF_data[7] << 24
                         )
-                        print("TOF system time is: " + str(TOF_system_time) + "ms")
+                        print("TOF system time is: " + str(TOF_system_time) + "ms", flush=True)
                         TOF_distance = (TOF_data[8]) | (TOF_data[9] << 8) | (TOF_data[10] << 16)
-                        print("TOF distance is: " + str(TOF_distance) + "mm")
+                        print("TOF distance is: " + str(TOF_distance) + "mm", flush=True)
                         TOF_status = TOF_data[11]
-                        print("TOF status is: " + str(TOF_status))
+                        print("TOF status is: " + str(TOF_status), flush=True)
                         TOF_signal = TOF_data[12] | TOF_data[13] << 8
-                        print("TOF signal is: " + str(TOF_signal))
+                        print("TOF signal is: " + str(TOF_signal), flush=True)
+                        # return TOF_distance
                         return TOF_distance
             else:
-                print("Nie ma odpowiedzi")
+                print("Nie ma odpowiedzi", flush=True)
                 return "NO DATA"
+
         
         
     def cleanup(self):
@@ -77,10 +80,10 @@ class TOF_sensor:
             TOF_check += data[k]
         TOF_check = TOF_check % 256
         if TOF_check == data[len - 1]:
-            print("TOF data is ok!")
+            print("TOF data is ok!", flush=True)
             return 1
         else:
-            print("TOF data is error!")
+            print("TOF data is error!", flush=True)
             return 0
     def calcCheckSum(self, data, len):
         TOF_check = 0

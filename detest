@@ -8,8 +8,8 @@ set -o xtrace
 # Define the target host, private key path, and the paths of the files
 readonly TARGET_HOST=Rebuild@RE1
 readonly PRIVATE_KEY_PATH=~/.ssh/id_rsa
-readonly CAMERA_SCRIPT_FOLDER_PATH=./sensor_test.py
-readonly CAMERA_MAIN_PATH=./sensor_test.py
+readonly CAMERA_SCRIPT_FOLDER_PATH=./sensor_test
+readonly CAMERA_MAIN_PATH=./sensor_test/sensor_test.py
 
 readonly REMOTE_PATH=/home/Rebuild/
 

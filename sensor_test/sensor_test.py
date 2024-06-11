@@ -51,6 +51,10 @@ for channel in channels:
     GPIO.setup(channel, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
     GPIO.add_event_detect(channel, GPIO.RISING)  # add rising edge detection on a channel
 
+    # for channel in channels:
+    #     if GPIO.event_detected(channel):
+    #         print(f"Sensor {channel} activated")
+    #         requests.get("http://127.0.0.1:8000/distance")
 
 SENSOR_ID = 0x02
 
@@ -66,7 +70,7 @@ while True:
     # Wysalnie  zapytania
     ser.write(bytes(RAW_QUERY))
     # print(f"Wyslano zapytanie po uarcie o tresci {bytes(RAW_QUERY)}")
-    time.sleep(1)
+    time.sleep(0.1)
 
     # czekanie na napelnienie bufora
     print(f"{ser.inWaiting()} bajtow czeka w buforze uart")
