@@ -66,7 +66,7 @@ while True:
     # Wysalnie  zapytania
     ser.write(bytes(RAW_QUERY))
     # print(f"Wyslano zapytanie po uarcie o tresci {bytes(RAW_QUERY)}")
-    time.sleep(0.1)
+    time.sleep(1)
 
     # czekanie na napelnienie bufora
     print(f"{ser.inWaiting()} bajtow czeka w buforze uart")
@@ -104,7 +104,7 @@ while True:
     else:
         print("Nie ma odpowiedzi")
         
-    for channel in channels:
-        if GPIO.event_detected(channel):
-            print(f"Sensor {channel} activated")
-            requests.get("http://127.0.0.1:8000/distance")
+    # for channel in channels:
+    #     if GPIO.event_detected(channel):
+    #         print(f"Sensor {channel} activated")
+    #         requests.get("http://127.0.0.1:8000/distance")

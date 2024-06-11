@@ -4,6 +4,7 @@ import socket
 import pickle
 from random import randint
 
+from TOF_sensor import TOF_sensor
 
 app = Flask(__name__)
 
@@ -11,14 +12,18 @@ app = Flask(__name__)
 @app.route('/distance', methods=["GET", "POST"])
 def distance():
     """Distance endpoint."""
-
+    sensor = TOF_sensor()
+    # Read distance from UART sensor
+    s1_val = sensor.read_distance(0x01)
+    s2_val = sensor.read_distance(0x02)
+    s3_val = sensor.read_distance(0x03)
     # User reached route via POST
     if request.method == "POST":
         pass
 
     # User reached route via GET
     else:
-        distance={"left": 3.4, "right": 8, "bottom": 12.7}
+        distance={"left": s1_val, "right": s2_val, "bottom": s3_val}
         sensor_closed(1)
         return distance
 
@@ -68,4 +73,4 @@ def send_request(url, data):
     
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=8000)
+    app.run(host='0.0.0.0', port=8000)
