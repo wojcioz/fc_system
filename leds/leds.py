@@ -6,11 +6,11 @@ import json
 import socket
 import pickle
 
-
-pixels = neopixel.NeoPixel(board.D18, 30)
+leds_count = 100
+pixels = neopixel.NeoPixel(board.D18, 32)
 pixels[0] = (255, 0, 0)
 
-leds_count = 100
+
 # Rozkminić jak sterować ledami przez JSONa (dict)
 #  - wczytywanie koloru stałego na starcie programu z jsona
 #  - zmiana koloru stałego
