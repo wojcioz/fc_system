@@ -1,0 +1,12 @@
+[Unit]
+Description=My leds service
+After=network.target
+
+[Service]
+ExecStart=sudo /home/Rebuild/env/bin/python leds.py
+User=Rebuild
+WorkingDirectory=/home/Rebuild/leds
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

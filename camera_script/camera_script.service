@@ -1,0 +1,12 @@
+[Unit]
+Description=My camera_script service
+After=network.target
+
+[Service]
+ExecStart=python camera_main.py
+User=Rebuild
+WorkingDirectory=/home/Rebuild/camera_script
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

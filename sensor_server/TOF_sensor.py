@@ -31,41 +31,43 @@ class TOF_sensor:
             time.sleep(0.01)
             print(f"{ser.inWaiting()} bajtow czeka w buforze uart", flush=True)
             
-            if ser.inWaiting() >= 16:
+            for i in range(10):
+                time.sleep(0.01)
+                if ser.inWaiting() >= 16:
 
-                # sczytanie danych z bufora
-                TOF_data = ()
-                for i in range(0, 16):
-                    TOF_data = TOF_data + (ord(ser.read(1)),)
+                    # sczytanie danych z bufora
+                    TOF_data = ()
+                    for i in range(0, 16):
+                        TOF_data = TOF_data + (ord(ser.read(1)),)
 
-                # sprawdznie poprawnosci naglowka i sumy kontrolnej
-                if (
-                    TOF_data[0] == self.TOF_header[0]
-                    and TOF_data[1] == self.TOF_header[1]
-                    and TOF_data[2] == self.TOF_header[2]
-                ) and (self.verifyCheckSum(TOF_data[:self.TOF_length], self.TOF_length)):
-                    if ((TOF_data[12]) | (TOF_data[13] << 8)) == 0:
-                        print("Out of range!", flush=True)
-                    else:
-                        print("TOF id is: " + str(TOF_data[3]), flush=True)
-                        TOF_system_time = (
-                            TOF_data[4]
-                            | TOF_data[5] << 8
-                            | TOF_data[6] << 16
-                            | TOF_data[7] << 24
-                        )
-                        print("TOF system time is: " + str(TOF_system_time) + "ms", flush=True)
-                        TOF_distance = (TOF_data[8]) | (TOF_data[9] << 8) | (TOF_data[10] << 16)
-                        print("TOF distance is: " + str(TOF_distance) + "mm", flush=True)
-                        TOF_status = TOF_data[11]
-                        print("TOF status is: " + str(TOF_status), flush=True)
-                        TOF_signal = TOF_data[12] | TOF_data[13] << 8
-                        print("TOF signal is: " + str(TOF_signal), flush=True)
-                        # return TOF_distance
-                        return TOF_distance
-            else:
-                print("Nie ma odpowiedzi", flush=True)
-                return "NO DATA"
+                    # sprawdznie poprawnosci naglowka i sumy kontrolnej
+                    if (
+                        TOF_data[0] == self.TOF_header[0]
+                        and TOF_data[1] == self.TOF_header[1]
+                        and TOF_data[2] == self.TOF_header[2]
+                    ) and (self.verifyCheckSum(TOF_data[:self.TOF_length], self.TOF_length)):
+                        if ((TOF_data[12]) | (TOF_data[13] << 8)) == 0:
+                            print("Out of range!", flush=True)
+                        else:
+                            print("TOF id is: " + str(TOF_data[3]), flush=True)
+                            TOF_system_time = (
+                                TOF_data[4]
+                                | TOF_data[5] << 8
+                                | TOF_data[6] << 16
+                                | TOF_data[7] << 24
+                            )
+                            print("TOF system time is: " + str(TOF_system_time) + "ms", flush=True)
+                            TOF_distance = (TOF_data[8]) | (TOF_data[9] << 8) | (TOF_data[10] << 16)
+                            print("TOF distance is: " + str(TOF_distance) + "mm", flush=True)
+                            TOF_status = TOF_data[11]
+                            print("TOF status is: " + str(TOF_status), flush=True)
+                            TOF_signal = TOF_data[12] | TOF_data[13] << 8
+                            print("TOF signal is: " + str(TOF_signal), flush=True)
+                            # return TOF_distance
+                            return TOF_distance
+                else:
+                    print("Nie ma odpowiedzi", flush=True)
+            return "NO DATA"
 
         
         

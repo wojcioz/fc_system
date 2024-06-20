@@ -3,6 +3,7 @@ import RPi.GPIO as GPIO
 from TOF_sensor import TOF_sensor
 from Beam_sensor import Sensor
 from utils import send_request
+import time
 
 app = Flask(__name__)
 
@@ -12,23 +13,27 @@ def distance():
     """Distance endpoint."""
     sensor = TOF_sensor()
     # Read distance from UART sensor
+    time.sleep(0.1)
     s1_val = sensor.read_distance(0x01)
+    time.sleep(0.1)
     s2_val = sensor.read_distance(0x02)
+    time.sleep(0.1)
     s3_val = sensor.read_distance(0x03)
+    time.sleep(0.1)
     # User reached route via POST
     if request.method == "POST":
         pass
 
     # User reached route via GET
     else:
-        distance={"left": s1_val, "right": s2_val, "bottom": s3_val}
+        distance={"left": s1_val, "right": s3_val, "bottom": s2_val}
         
         return distance
 
 
 def sensor_closed(id):
     
-    print("Sensor actiated! ID: ", id, flush=True)
+    print("Sensor activated! ID: ", id, flush=True)
     color = {"r": randint(0, 255), "g": randint(0, 255), "b": randint(0, 255)}
     
     with open('config.json') as f:
@@ -46,7 +51,7 @@ def sensor_closed(id):
 GPIO.setmode(GPIO.BOARD)
 channels = [11, 13, 15]
 sensors = [Sensor(i+1, channel) for i, channel in enumerate(channels)]
-
+# sensors = [Sensor(1, channels[1])]
 
 
 if __name__ == '__main__':

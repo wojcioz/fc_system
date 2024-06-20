@@ -22,6 +22,7 @@ def start_capture():
 @app.route("/stop_capture")
 def stop_capture():
     global cam_handler
+    print("Stopping capture", flush=True)
     cam_handler.stop_recording()
     return "Capture stopped"
 

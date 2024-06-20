@@ -6,12 +6,12 @@ set -o pipefail
 set -o xtrace
 
 # Define the target host, private key path, and the paths of the files
-readonly TARGET_HOST=Rebuild@RE1
+readonly TARGET_HOST=berry@RE1
 readonly PRIVATE_KEY_PATH=~/.ssh/id_rsa
 readonly SCRIPT_FOLDER=./python_tester/
 readonly MAIN_FILE_PATH=./python_tester/test_server.py
 
-readonly REMOTE_PATH=/home/Rebuild/
+readonly REMOTE_PATH=/home/berry/
 
 # Copy the files to the remote machine
 scp -r -i ${PRIVATE_KEY_PATH} ${SCRIPT_FOLDER} ${TARGET_HOST}:${REMOTE_PATH}

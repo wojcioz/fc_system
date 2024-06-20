@@ -1,0 +1,12 @@
+[Unit]
+Description=My sensor_server service
+After=network.target
+
+[Service]
+ExecStart=sudo /home/Rebuild/env/bin/python sensor_server.py
+User=Rebuild
+WorkingDirectory=/home/Rebuild/sensor_server
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
