@@ -1,6 +1,16 @@
 # fc_sensors
 
-# Cross compiling
+To run the project on RPi you should run three scripts:
+- deleds
+- depython
+- desensor_server
+
+They transfer all necessary files to RPi and run them. You of course have to connect all necessary electronics for it to work.
+
+On systems that I have created there are services that run all the necessary code on system startup, and when you run the provided scripts, they update automatically on upload. You just need to restart the system.  
+
+
+## [OLD] Cross compiling
 Needs to run on Ubuntu 20 wsl
 
 guide:
@@ -26,14 +36,16 @@ sudo apt-get install gcc-arm*
 
 sudo apt-get install libudev-dev
 
-# To configure gstreamer on raspi:
+
+## [OLD] To configure gstreamer on raspi:
 https://docs.rs/gstreamer/latest/gstreamer/
 needs qt5:
 https://qengineering.eu/install-gstreamer-1.18-on-raspberry-pi-4.html
 so we install qt5:
 https://www.tal.org/tutorials/building-qt-515-lts-raspberry-pi-raspberry-pi-os
 
-# To allow cross compile with working camera
+
+## [OLD] To allow cross compile with working camera
 
 when in wsl, allow docker to work in ubuntu 20 from docker desktop
 
@@ -49,14 +61,16 @@ https://gstreamer.freedesktop.org/documentation/installing/on-linux.html?gi-lang
 
 
 the above didnt help
-## now from https://www.collabora.com/news-and-blog/blog/2020/06/23/cross-building-rust-gstreamer-plugins-for-the-raspberry-pi/
+
+### now from https://www.collabora.com/news-and-blog/blog/2020/06/23/cross-building-rust-gstreamer-plugins-for-the-raspberry-pi/
 
 [target.armv7-unknown-linux-gnueabihf]
 linker = "arm-linux-gnueabihf-gcc"
 
 stopped on this one
 
-## now trying to use docker for that
+
+###  [OLD]now trying to use docker for that
 create dockerfile
 
 build docker image
@@ -65,14 +79,16 @@ gstreamer-app = "0.18.3"
 gstreamer-video = "0.18.3"
 mmal-sys = "0.1.0-3"
 
-# to cross compile with vl53l1x
+
+##  [OLD]to cross compile with vl53l1x
 
 add to variables
 export VL53L1X_CC=arm-linux-gnueabihf-gcc
 export VL53L1X_AR=arm-linux-gnueabihf-ar
 
 
-# to setup rpi for camera capture
+
+## to setup rpi for camera capture
 https://forum.arducam.com/t/how-to-use-arducam-64mp-arducam-64mp-faq/2848/2
 
 sudo apt install dphys-swapfile
@@ -83,7 +99,7 @@ sudo dphys-swapfile setup
 sudo dphys-swapfile swapon
 
 
-### possible problems:
+# possible problems:
 1. CMA memory
 source: https://github.com/raspberrypi/rpicam-apps/issues/555
 
@@ -91,7 +107,8 @@ source: https://github.com/raspberrypi/rpicam-apps/issues/555
 3. https://forums.raspberrypi.com/viewtopic.php?t=339182
 echo 2 > /sys/module/videobuf2_common/parameters/debug
 
-# To config rpi for VL53L1X
+
+## To config rpi for VL53L1X
 
 cd
 sudo apt-get install wiringpi
@@ -100,21 +117,26 @@ wget https://project-downloads.drogon.net/wiringpi-latest.deb
 sudo dpkg -i wiringpi-latest.deb
 gpio -v
 
-# Bullseye branch system using the following command:
+
+## Bullseye branch system using the following command:
 git clone https://github.com/WiringPi/WiringPi
 cd WiringPi
 ./build
 gpio -v
 
-# when faced with error:
+
+## when faced with error:
 error: linking with `arm-linux-gnueabihf-gcc` failed: exit status: 1
 just cargo clean
 
-# for uart
+
+## for uart
 enable serial port in raspi-config
 chmod 766 /dev/ttyS0
 remove ```console=serial0, 115200``` from ```sudo nano /boot/cmdline.txt```
 
-
+ [OLD]
 export CARGO_PROFILE_RELEASE_BUILD_OVERRIDE_DEBUG=true 
 export RUST_BACKTRACE=1
+
+
